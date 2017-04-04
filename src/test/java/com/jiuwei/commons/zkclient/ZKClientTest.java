@@ -10,7 +10,7 @@ public class ZKClientTest {
 	public static void main(String[] args) {
 		ZKClient zKClient = new CuratorZKClient();
 		zKClient.build();
-
+		
 		zKClient.watch();
 
 		zKClient.pathChildrenWatch("/test", new ZKListener() {

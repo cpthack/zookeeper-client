@@ -16,12 +16,9 @@ import com.jiuwei.commons.zkclient.config.ZkConfig;
 import com.jiuwei.commons.zkclient.enums.WatchType;
 import com.jiuwei.commons.zkclient.event.AbstractZKListener;
 import com.jiuwei.commons.zkclient.event.ZKListener;
-import com.jiuwei.commons.zkclient.event.ZKTreeWatchEvent;
 import com.jiuwei.commons.zkclient.exception.ZookeeperException;
 import com.jiuwei.commons.zkclient.helper.ObjectHelper;
 import com.jiuwei.commons.zkclient.helper.StringHelper;
-import com.jiuwei.plugins.event.EventKit;
-import com.jiuwei.plugins.event.EventPlugin;
 
 /**
  *
@@ -182,27 +179,15 @@ public class CuratorZKClient extends AbstractZKListener implements ZKClient {
 	}
 
 	private synchronized void rootTreeWatch() {
-
-		// EventPlugin eventPlugin = new EventPlugin();
-		// eventPlugin.setScanPackage("com.jiuwei.commons.zkclient");
-		// eventPlugin.start();
-
 		try {
-			/**
-			 * 所有子节点的监听
-			 */
+			// 所有子节点的监听
 			TreeCacheListener treeCacheListener = new TreeCacheListener() {
 				public void childEvent(CuratorFramework client,
 						TreeCacheEvent event) throws Exception {
-
 					// 接受所有子节点的变更事件，并发送事件到监听器做统一调度
 					WatchPathMulticaster(event);
-
-					// EventKit.post(new ZKTreeWatchEvent(event));
-
 				}
 			};
-
 			// 监听根节点下所有变更事件
 			TreeCache treeCache = new TreeCache(zkClient, "/");
 			treeCache.start();
