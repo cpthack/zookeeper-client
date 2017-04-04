@@ -8,7 +8,7 @@ public class ZKClientTest {
 
 	public static void main(String[] args) {
 		
-		ZKClient zKClient = ZKClientBuilder.build(	);
+		ZKClient zKClient = ZKClientBuilder.build();
 
 		/*
 		 * 监听节点 example
