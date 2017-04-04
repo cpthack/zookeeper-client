@@ -5,23 +5,37 @@ import java.util.List;
 import com.jiuwei.commons.zkclient.event.ZKListener;
 
 /**
+ * <b>com.jiuwei.commons.zkclient.core.ZKClient.java</b></br>
+ * TODO(这里用一句话描述这个类的作用)</br>
  *
  * @author cpthack cpt@jianzhimao.com
- * @date Aug 6, 2016 3:12:00 PM <br/>
- * @version
+ * @date 2017年4月4日 下午1:56:04
  * @since JDK 1.7
  */
 public interface ZKClient {
 
+	/**
+	 * 
+	 * <b>build </b> <br/>
+	 * 
+	 * TODO(这里用一句话描述这个方法的作用) <br/>
+	 * 
+	 * @author cpthack cpt@jianzhimao.com
+	 * @return
+	 * @return CuratorZKClient
+	 *
+	 */
 	CuratorZKClient build();
 
 	/**
-	 * <b>create</b> <br/>
+	 * <b>create </b> <br/>
+	 * 
 	 * 创建zookeeper节点，并设置值. <br/>
 	 * 
 	 * @author cpthack cpt@jianzhimao.com
 	 * @param path
 	 * @param data
+	 * @return void
 	 *
 	 */
 	void create(String path, String data);
@@ -50,58 +64,84 @@ public interface ZKClient {
 	void update(String path, String data);
 
 	/**
-	 * <b>getChildren</b> <br/>
+	 * 
+	 * <b>getChildren </b> <br/>
 	 * 
 	 * 获取zookeeper指定目录下的子节点. <br/>
 	 * 
 	 * @author cpthack cpt@jianzhimao.com
 	 * @param path
-	 * @return
+	 * @return List<String>
 	 *
 	 */
 	List<String> getChildren(String path);
 
 	/**
-	 * <b>getData</b> <br/>
+	 * 
+	 * <b>getData </b> <br/>
 	 * 
 	 * 获取指定节点下的数据. <br/>
 	 * 
 	 * @author cpthack cpt@jianzhimao.com
 	 * @param path
-	 * @return
+	 * @return String
 	 *
 	 */
 	String getData(String path);
 
 	/**
 	 * 
-	 * <b>exists</b> <br/>
+	 * <b>exists </b> <br/>
 	 * 
-	 * 判断zookeeper节点是否存在
+	 * 判断zookeeper节点是否存在<br/>
 	 * 
 	 * @author cpthack cpt@jianzhimao.com
 	 * @param path
-	 * @return
+	 * @return boolean
 	 *
 	 */
 	boolean exists(String path);
-	
-	
+
 	/**
-	 * <b>watch</b> <br/>
 	 * 
-	 * 监控zookeeper节点变化
+	 * <b>pathChildrenWatch </b> <br/>
+	 * 
+	 * 监控zookeeper节点的子节点数据的变化.<br/>
 	 * 
 	 * @author cpthack cpt@jianzhimao.com
+	 * @param path
+	 * @param listener
+	 *            void
 	 *
 	 */
-	void watch();
-	
-	
-	void pathChildrenWatch(String path,ZKListener listener);
-	
-	void nodeWatch(String path,ZKListener listener);
-	
-	void treeWatch(String path,ZKListener listener);
+	void pathChildrenWatch(String path, ZKListener listener);
+
+	/**
+	 * 
+	 * <b>nodeWatch </b> <br/>
+	 * 
+	 * 监控zookeeper节点数据的变化（不包含子节点）.<br/>
+	 *
+	 * @author cpthack cpt@jianzhimao.com
+	 * @param path
+	 * @param listener
+	 *            void
+	 *
+	 */
+	void nodeWatch(String path, ZKListener listener);
+
+	/**
+	 * 
+	 * <b>treeWatch </b> <br/>
+	 * 
+	 * 监控zookeeper节点及其所有子节点数据的变化.<br/>
+	 * 
+	 * @author cpthack cpt@jianzhimao.com
+	 * @param path
+	 * @param listener
+	 *            void
+	 *
+	 */
+	void treeWatch(String path, ZKListener listener);
 
 }

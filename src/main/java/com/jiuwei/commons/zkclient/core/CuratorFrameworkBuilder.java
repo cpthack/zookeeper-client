@@ -11,13 +11,21 @@ import org.slf4j.LoggerFactory;
 import com.jiuwei.commons.zkclient.config.ZkConfig;
 import com.jiuwei.commons.zkclient.exception.ZookeeperException;
 
-public class CuratorBuilder {
+/** 
+ * <b>com.jiuwei.commons.zkclient.core.CuratorFrameworkBuilder.java</b></br>
+ * TODO(这里用一句话描述这个类的作用)</br>
+ *
+ * @author cpthack cpt@jianzhimao.com 
+ * @date 2017年4月4日 下午2:15:45 
+ * @since JDK 1.7 
+*/
+public class CuratorFrameworkBuilder {
 	private final static Logger logger = LoggerFactory
-			.getLogger(CuratorBuilder.class);
+			.getLogger(CuratorFrameworkBuilder.class);
 	private ZkConfig zkconfig = ZkConfig.getInstance();
 	private CuratorFramework zkClient = null;
 
-	public CuratorBuilder setZkconfig(ZkConfig zkconfig) {
+	public CuratorFrameworkBuilder setZkconfig(ZkConfig zkconfig) {
 		this.zkconfig = zkconfig;
 		return this;
 	}

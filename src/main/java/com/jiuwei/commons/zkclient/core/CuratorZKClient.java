@@ -31,7 +31,7 @@ public class CuratorZKClient extends AbstractZKListener implements ZKClient {
 
 	private final static Logger LOGGER = LoggerFactory
 			.getLogger(CuratorZKClient.class);
-	private final static CuratorBuilder builder = new CuratorBuilder();
+	private final static CuratorFrameworkBuilder builder = new CuratorFrameworkBuilder();
 	static CuratorFramework zkClient = null;
 	private ZkConfig zkConfig = null;
 	private final static boolean isWatch = false;
@@ -59,10 +59,14 @@ public class CuratorZKClient extends AbstractZKListener implements ZKClient {
 		}
 
 		try {
-			zkClient.create().creatingParentsIfNeeded()// 当父节点不存在时，自动创建
-					.withMode(CreateMode.PERSISTENT)// 存储类型（临时的还是持久的）
+			zkClient.create()
+					.creatingParentsIfNeeded()
+					// 当父节点不存在时，自动创建
+					.withMode(CreateMode.PERSISTENT)
+					// 存储类型（临时的还是持久的）
 					// .withACL(ZooDefs.Ids.OPEN_ACL_UNSAFE)//访问权限
-					.forPath(path, data.getBytes(zkConfig.getCharset()));
+					.forPath(path,
+							StringHelper.getBytes(data, zkConfig.getCharset()));
 		} catch (Exception e) {
 			LOGGER.error("", e);
 			throw new ZookeeperException("创建zookeeper节点[{" + path + "}]失败，原因："
@@ -158,9 +162,27 @@ public class CuratorZKClient extends AbstractZKListener implements ZKClient {
 		}
 		return exists;
 	}
+	
+	@Override
+	public void pathChildrenWatch(String path, ZKListener listener) {
+		 watch();
+		setWatchPath(WatchType.PathChildWatch, path, listener);
+	}
 
 	@Override
-	public synchronized void watch() {
+	public void nodeWatch(String path, ZKListener listener) {
+		watch();
+		setWatchPath(WatchType.NodeWatch, path, listener);
+	}
+
+	@Override
+	public void treeWatch(String path, ZKListener listener) {
+		watch();
+		setWatchPath(WatchType.TreeWatch, path, listener);
+	}
+	
+	
+	private synchronized void watch(){
 		if (!isWatch) {
 			Thread thread = new Thread(new Runnable() {
 				@Override
@@ -196,21 +218,6 @@ public class CuratorZKClient extends AbstractZKListener implements ZKClient {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	public void pathChildrenWatch(String path, ZKListener listener) {
-		setWatchPath(WatchType.PathChildWatch, path, listener);
-	}
-
-	@Override
-	public void nodeWatch(String path, ZKListener listener) {
-		setWatchPath(WatchType.NodeWatch, path, listener);
-	}
-
-	@Override
-	public void treeWatch(String path, ZKListener listener) {
-		setWatchPath(WatchType.TreeWatch, path, listener);
 	}
 
 }

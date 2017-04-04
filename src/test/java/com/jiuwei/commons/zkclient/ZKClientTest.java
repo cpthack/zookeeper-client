@@ -1,6 +1,5 @@
 package com.jiuwei.commons.zkclient;
 
-import com.jiuwei.commons.zkclient.core.CuratorZKClient;
 import com.jiuwei.commons.zkclient.core.ZKClient;
 import com.jiuwei.commons.zkclient.entity.ZKEventData;
 import com.jiuwei.commons.zkclient.event.ZKListener;
@@ -8,11 +7,12 @@ import com.jiuwei.commons.zkclient.event.ZKListener;
 public class ZKClientTest {
 
 	public static void main(String[] args) {
-		ZKClient zKClient = new CuratorZKClient();
-		zKClient.build();
 		
-		zKClient.watch();
+		ZKClient zKClient = ZKClientBuilder.build(	);
 
+		/*
+		 * 监听节点 example
+		 */
 		zKClient.pathChildrenWatch("/test", new ZKListener() {
 			@Override
 			public void watchNode(ZKEventData eventData) {
@@ -30,5 +30,12 @@ public class ZKClientTest {
 						+ eventData.getPath() + " , " + eventData.getData());
 			}
 		});
+		
+		/*
+		 * 创建节点 example
+		 */
+		zKClient.create("/test/abc/t", "我叫成佩涛");
+		
+		
 	}
 }
