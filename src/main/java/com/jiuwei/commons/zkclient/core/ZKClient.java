@@ -15,19 +15,6 @@ import com.jiuwei.commons.zkclient.event.ZKListener;
 public interface ZKClient {
 
 	/**
-	 * 
-	 * <b>build </b> <br/>
-	 * 
-	 * TODO(这里用一句话描述这个方法的作用) <br/>
-	 * 
-	 * @author cpthack cpt@jianzhimao.com
-	 * @return
-	 * @return CuratorZKClient
-	 *
-	 */
-	CuratorZKClient build();
-
-	/**
 	 * <b>create </b> <br/>
 	 * 
 	 * 创建zookeeper节点，并设置值. <br/>

@@ -57,7 +57,7 @@ public class CuratorFrameworkBuilder {
 			throw new ZookeeperException("无法连接zookeeper集群, 原因："
 					+ e.getMessage());
 		}
-		logger.info(" >>" + zkClient.getState());
+		logger.info("zookeeper集群连接成功.");
 
 		return zkClient;
 	}

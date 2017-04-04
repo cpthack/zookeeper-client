@@ -23,10 +23,11 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class FileUtils {
-	private static Logger logger = Logger.getLogger(FileUtils.class);
+	private static Logger logger = LoggerFactory.getLogger(FileUtils.class);
 	private static SimpleDateFormat sdfYMD = new SimpleDateFormat("yyyyMMdd/");
 	private static SimpleDateFormat sdfFile = new SimpleDateFormat(
 			"yyyyMMddHHmmss");

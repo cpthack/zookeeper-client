@@ -65,7 +65,7 @@ public final class StringHelper {
    * 
    */
   public static String newString(byte[] bytes, String charset) {
-    if(ObjectHelper.isNull(bytes)){
+	  if(ObjectHelper.isNull(bytes)){
       return "";
     }
     

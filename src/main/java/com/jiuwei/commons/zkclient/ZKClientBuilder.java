@@ -28,7 +28,9 @@ import com.jiuwei.commons.zkclient.core.ZKClient;
  */
 public class ZKClientBuilder {
 	
+	private final static CuratorZKClient instance = new CuratorZKClient().build();
+	
 	public static ZKClient build(){
-		return new CuratorZKClient().build();
+		return instance;
 	}
 }

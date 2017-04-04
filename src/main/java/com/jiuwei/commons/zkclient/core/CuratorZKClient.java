@@ -29,15 +29,15 @@ import com.jiuwei.commons.zkclient.helper.StringHelper;
  */
 public class CuratorZKClient extends AbstractZKListener implements ZKClient {
 
-	private final static Logger LOGGER = LoggerFactory
+	private final static Logger logger = LoggerFactory
 			.getLogger(CuratorZKClient.class);
 	private final static CuratorFrameworkBuilder builder = new CuratorFrameworkBuilder();
 	static CuratorFramework zkClient = null;
-	private ZkConfig zkConfig = null;
+	private ZkConfig zkConfig = builder.getZkconfig();
 	private final static boolean isWatch = false;
-
+	
+	
 	public CuratorZKClient build() {
-		zkConfig = builder.getZkconfig();
 		return build(zkConfig);
 	}
 
@@ -68,7 +68,7 @@ public class CuratorZKClient extends AbstractZKListener implements ZKClient {
 					.forPath(path,
 							StringHelper.getBytes(data, zkConfig.getCharset()));
 		} catch (Exception e) {
-			LOGGER.error("", e);
+			logger.error("", e);
 			throw new ZookeeperException("创建zookeeper节点[{" + path + "}]失败，原因："
 					+ e.getMessage());
 		}
@@ -84,7 +84,7 @@ public class CuratorZKClient extends AbstractZKListener implements ZKClient {
 		try {
 			zkClient.delete().deletingChildrenIfNeeded().forPath(path);
 		} catch (Exception e) {
-			LOGGER.error("", e);
+			logger.error("", e);
 			throw new ZookeeperException("删除zookeeper节点[" + path + "]失败，原因："
 					+ e.getMessage());
 		}
@@ -101,7 +101,7 @@ public class CuratorZKClient extends AbstractZKListener implements ZKClient {
 			zkClient.setData().forPath(path,
 					StringHelper.getBytes(data, zkConfig.getCharset()));
 		} catch (Exception e) {
-			LOGGER.error("", e);
+			logger.error("", e);
 			throw new ZookeeperException("修改zookeeper节点[" + path + "]的数据为["
 					+ data + "]失败，原因：" + e.getMessage());
 		}
@@ -109,7 +109,7 @@ public class CuratorZKClient extends AbstractZKListener implements ZKClient {
 
 	@Override
 	public List<String> getChildren(String path) {
-		LOGGER.debug("获取zookeeper节点[{}]下的子节点", path);
+		logger.debug("获取zookeeper节点[{}]下的子节点", path);
 		if (!exists(path)) {
 			throw new ZookeeperException("zookeeper集群命名空间["
 					+ zkConfig.getNamespace() + "]不存在节点[" + path + "]");
@@ -119,7 +119,7 @@ public class CuratorZKClient extends AbstractZKListener implements ZKClient {
 		try {
 			childrenNodes = zkClient.getChildren().forPath(path);
 		} catch (Exception e) {
-			LOGGER.error("", e);
+			logger.error("", e);
 			throw new ZookeeperException("获取zookeeper节点[" + path
 					+ "]的子节点失败，原因：" + e.getMessage());
 		}
@@ -129,17 +129,18 @@ public class CuratorZKClient extends AbstractZKListener implements ZKClient {
 	@Override
 	public String getData(String path) {
 		String data = "";
-		LOGGER.debug("获取zookeeper节点[{}]的数据", path);
-		if (!exists(path)) {
-			throw new ZookeeperException("zookeeper集群命名空间["
-					+ zkConfig.getNamespace() + "]不存在节点[" + path + "]");
+		logger.debug("获取zookeeper节点[{}]的数据", path);
+		
+		if(!getChildren(path).isEmpty()){
+			logger.warn("["+path+"]是一個目录，无法获取具体节点数据.");
+			return null;
 		}
-
+		
 		try {
 			data = StringHelper.newString(zkClient.getData().forPath(path),
 					zkConfig.getCharset());
 		} catch (Exception e) {
-			LOGGER.error("", e);
+			logger.error("", e);
 			throw new ZookeeperException("获取zookeeper节点[" + path + "]的数据失败，原因："
 					+ e.getMessage());
 		}
@@ -156,7 +157,7 @@ public class CuratorZKClient extends AbstractZKListener implements ZKClient {
 			exists = ObjectHelper.isNotNull(zkClient.checkExists()
 					.forPath(path));
 		} catch (Exception e) {
-			LOGGER.error("", e);
+			logger.error("", e);
 			throw new ZookeeperException("判断zookeeper节点[" + path + "]失败，原因："
 					+ e.getMessage());
 		}
@@ -192,7 +193,7 @@ public class CuratorZKClient extends AbstractZKListener implements ZKClient {
 						rootTreeWatch();
 						countDownLatch.await();
 					} catch (InterruptedException e) {
-						e.printStackTrace();
+						logger.error("启动根节点变更事件监听线程出错",e);
 					}
 				}
 			});
@@ -216,7 +217,7 @@ public class CuratorZKClient extends AbstractZKListener implements ZKClient {
 			treeCache.getListenable().addListener(treeCacheListener);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("监听根节点下所有变更事件出错",e);
 		}
 	}
 

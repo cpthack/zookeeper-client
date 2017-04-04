@@ -10,6 +10,7 @@ public class ZkConfig extends AbstractConfig{
 	private final String ZK_CONFIG_NAMESPACE = "zk.config.namespace";
 
 	private static final ZkConfig instance = new ZkConfig();
+	
 	public static ZkConfig getInstance(){
 		return instance;
 	}

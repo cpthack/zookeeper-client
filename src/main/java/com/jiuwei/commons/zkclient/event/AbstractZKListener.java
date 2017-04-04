@@ -11,8 +11,7 @@ import com.jiuwei.commons.zkclient.enums.EventType;
 import com.jiuwei.commons.zkclient.enums.WatchType;
 
 public abstract class AbstractZKListener {
-	// ZKTreeWatchApplicationListener listener = new
-	// ZKTreeWatchApplicationListener();
+
 	static Map<Integer, Map<String, ZKListener>> listeners = new ConcurrentHashMap<Integer, Map<String, ZKListener>>();
 
 	protected void setWatchPath(WatchType watchType, String path,

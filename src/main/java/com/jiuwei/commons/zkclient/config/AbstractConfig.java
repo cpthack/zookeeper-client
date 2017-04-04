@@ -3,14 +3,15 @@ package com.jiuwei.commons.zkclient.config;
 import java.util.Properties;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 读取配置文件的抽象基础类. 使用时，子类需指定配置文件名，并调用reloadConfig()方法.
  *
  */
 public abstract class AbstractConfig {
-	private static Logger logger = Logger.getLogger(AbstractConfig.class);
+	private static Logger logger = LoggerFactory.getLogger(AbstractConfig.class);
 	private Properties configProperties = null;
 
 	public synchronized boolean reloadConfig() {
