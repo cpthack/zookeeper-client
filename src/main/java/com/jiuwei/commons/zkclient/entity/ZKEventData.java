@@ -1,8 +1,12 @@
 package com.jiuwei.commons.zkclient.entity;
 
+import java.io.Serializable;
+
 import com.jiuwei.commons.zkclient.enums.EventType;
 
-public class ZKEventData {
+public class ZKEventData implements Serializable {
+
+	private static final long serialVersionUID = 7569041209134714950L;
 
 	private EventType eventType;
 
@@ -33,5 +37,5 @@ public class ZKEventData {
 	public void setEventType(EventType eventType) {
 		this.eventType = eventType;
 	}
-	
+
 }
