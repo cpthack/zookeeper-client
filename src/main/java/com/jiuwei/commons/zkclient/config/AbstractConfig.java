@@ -7,8 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 读取配置文件的抽象基础类. 使用时，子类需指定配置文件名，并调用reloadConfig()方法.
+ * 
+ * <b>com.jiuwei.commons.zkclient.config.AbstractConfig.java</b></br>
+ * 读取配置文件的抽象基础类. 使用时，子类需指定配置文件名，并调用reloadConfig()方法.</br>
  *
+ * @author cpthack cpt@jianzhimao.com 
+ * @date 2017年4月9日 下午2:55:16 
+ * @since JDK 1.7
  */
 public abstract class AbstractConfig {
 	private static Logger logger = LoggerFactory.getLogger(AbstractConfig.class);
