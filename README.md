@@ -69,6 +69,4 @@
 
 ## 具体参考：
 
-<a href = "https://github.com/cpthack/zookeeper-client/blob/master/src/test/java/com/jiuwei/commons/zkclient/ZKClientTest.java">
-ZKClientTest.java
-</a>
+测试类[ZKClientTest.java](https://github.com/cpthack/zookeeper-client/blob/master/src/test/java/com/jiuwei/commons/zkclient/ZKClientTest.java)
