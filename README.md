@@ -4,6 +4,8 @@
 
 ## 使用示例：
 
+> ZKClientTest.java代码引用
+
       ZKClient zKClient = ZKClientBuilder.build();
 		
 		for(int i=0;i<100000;i++)
@@ -65,7 +67,7 @@
 		System.out.println("开始获取ZK中PATH=[/]下的一级子节点及数据");
 		for(String path:pathList){
 			System.out.println("The path is ["+rootPath+path+"],The Data is ["+zKClient.getData(rootPath+path)+"].");
-		}
+		} 
 
 ## 具体参考：
 
